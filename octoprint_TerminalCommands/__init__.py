@@ -28,10 +28,7 @@ class TerminalcommandsPlugin(octoprint.plugin.SettingsPlugin,
 		# Define your plugin's asset files to automatically include in the
 		# core UI here.
 		return dict(
-			js=[
-				"js/TerminalCommands.js",
-				"js/terminalCommandsDialog.js"
-			],
+			js=["js/TerminalCommands.js"],
 			css=["css/TerminalCommands.css"],
 			less=["less/TerminalCommands.less"]
 		)

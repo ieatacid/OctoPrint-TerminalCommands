@@ -10,12 +10,13 @@ $(function() {
 
         self.terminalViewModel = parameters[0];
         self.settingsViewModel = parameters[1];
-        self.terminalCommandsDialogViewModel = parameters[2];
 
         self.terminalCommands = ko.observableArray([]);
 
-        self.addTerminalCommand = function() {
-            self.terminalCommands.push({name: "Label", commands: "Command"})
+        self.addTerminalCommand = function(data) {
+            console.log("addTerminalCommand: ")
+            console.log(data);
+            self.terminalCommands.push({name: "Name", commands: "Commands"})
         };
 
         self.removeTerminalCommand = function(filter) {
@@ -24,15 +25,53 @@ $(function() {
 
         function getCmdFromName(name) {
             var returnCmd = ko.utils.arrayFirst(self.terminalCommands(), function(cmd) {
-                if(typeof cmd.name === 'function')
-                    return cmd.name() == name;
+                if(typeof cmd.name === 'function') {
+                    return cmd.name() === name;
+                }
                 return cmd.name;
             });
 
-            if(typeof returnCmd.commands === 'function')
+            if(typeof returnCmd.commands === 'function') {
                 return returnCmd.commands();
+            }
             return returnCmd.commands;
         }
+
+        // From: https://github.com/foosel/OctoPrint/blob/master/src/octoprint/static/js/app/viewmodels/terminal.js#L320
+        // To bypass the terminal input textarea and not add to command history
+        var commandRe = /^(([gmt][0-9]+)(\.[0-9+])?)(\s.*)?/i;
+        self.sendCommand = function(command) {
+            if(!command) {
+                return;
+            }
+
+            var commandToSend = command;
+            var commandMatch = commandToSend.match(commandRe);
+            if(commandMatch !== null) {
+                var fullCode = commandMatch[1].toUpperCase(); // full code incl. sub code
+                var mainCode = commandMatch[2].toUpperCase(); // main code only without sub code
+
+                if(self.terminalViewModel.blacklist.indexOf(mainCode) < 0 && self.terminalViewModel.blacklist.indexOf(fullCode) < 0) {
+                    // full or main code not on blacklist -> upper case the whole command
+                    commandToSend = commandToSend.toUpperCase();
+                } else {
+                    // full or main code on blacklist -> only upper case that and leave parameters as is
+                    commandToSend = fullCode + (commandMatch[4] !== undefined ? commandMatch[4] : "");
+                }
+            }
+
+            if(commandToSend) {
+                OctoPrint.control.sendGcode(commandToSend);
+
+                /**** don't add to command history ****/
+                    // .done(function() {
+                        // self.terminalViewModel.cmdHistory.push(command);
+                        // self.terminalViewModel.cmdHistory.slice(-300); // just to set a sane limit to how many manually entered commands will be saved...
+                        // self.terminalViewModel.cmdHistoryIdx = self.terminalViewModel.cmdHistory.length;
+                        // self.terminalViewModel.command("");
+                    // });
+            }
+        };
 
         function sendCommandToTerminal(command) {
             self.terminalViewModel.command(command);
@@ -41,8 +80,8 @@ $(function() {
 
         function addButtonsToTermTab() {
             $(".termctrl").remove();
-            $("#terminal-filterpanel").before("\
-                <hr class=\"termctrl\">\
+            $("div.terminal").after("\
+                <hr class=\"termctrl\" style=\"margin-top: 35px\">\
                 <form class=\"form-horizontal termctrl\">\
                     <div class=\"termctrl\">\
                     </div>\
@@ -65,24 +104,18 @@ $(function() {
             $("button.termctrl").click(function() {
                 var button = $(this);
                 var command = getCmdFromName(button.text());
-                console.log("button name: %s", button.text());
-                console.log("button cmd: %s", command);
+                console.log("Adding: [" + button.text() + "]  " + command);
 
                 if(command.split("|").length > 1) {
                     cmdList = command.split("|");
                     command = "";
                     for(var i = 0; i < cmdList.length; i++) {
-                        sendCommandToTerminal(cmdList[i]);
+                        self.sendCommand(cmdList[i]);
                     }
                 } else {
-                    sendCommandToTerminal(command);
+                    self.sendCommand(command);
                 }
             });
-        }
-
-        function sleep(delay) {
-            var start = new Date().getTime();
-            while (new Date().getTime() < start + delay);
         }
 
         function debugArray() {
@@ -96,19 +129,17 @@ $(function() {
                     name = data.name;
                     commands = data.commands;
                 }
-                console.log("[" + name + "] ==> " + commands);
+                console.log("[" + name + "]  " + commands);
             })
         }
 
         self.onBeforeBinding = function () {
-            console.log("onBeforeBinding");
             self.terminalCommands(self.settingsViewModel.settings.plugins.TerminalCommands.controls.slice(0));
             debugArray();
             addButtonsToTermTab();
         };
 
         self.onSettingsBeforeSave = function () {
-            console.log("onSettingsBeforeSave");
             self.settingsViewModel.settings.plugins.TerminalCommands.controls(self.terminalCommands.slice(0));
             debugArray();
             addButtonsToTermTab();
@@ -117,7 +148,7 @@ $(function() {
 
     OCTOPRINT_VIEWMODELS.push([
         TerminalCommandsViewModel,
-        [ "terminalViewModel", "settingsViewModel", "terminalCommandsDialogViewModel"],
+        [ "terminalViewModel", "settingsViewModel"],
         [ "#settings_plugin_TerminalCommands" ]
     ]);
 });

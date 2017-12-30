@@ -1,6 +1,6 @@
 # OctoPrint-TerminalCommands
 
-**TODO:** Describe what your plugin does.
+Lets you add custom command buttons to the terminal tab
 
 ## Setup
 
@@ -9,8 +9,6 @@ or manually using this URL:
 
     https://github.com/ieatacid/OctoPrint-TerminalCommands/archive/master.zip
 
-**TODO:** Describe how to install your plugin, if more needs to be done than just installing it via pip or through
-the plugin manager.
 
 ## Configuration
 

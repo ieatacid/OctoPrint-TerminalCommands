@@ -11,7 +11,7 @@ or manually using this URL:
 
 
 ## Screenshots
-Adds custom command buttons to terminal tab
+Custom command buttons in the terminal tab
 
 ![Edit button](extras/assets/img/terminal_tab.png?raw=true)
 

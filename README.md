@@ -1,6 +1,8 @@
 # OctoPrint-TerminalCommands
 
-Lets you add custom command buttons to the terminal tab (currenty only supports G Code)
+Lets you add custom command buttons to the terminal tab (currenty only supports G Code).
+
+Multiple commands can be bound to one button by separating them with a semicolon (;) e.g. `M114;M503`
 
 ## Setup
 

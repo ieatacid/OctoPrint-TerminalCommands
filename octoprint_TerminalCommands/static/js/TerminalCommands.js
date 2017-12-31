@@ -73,11 +73,6 @@ $(function() {
             }
         };
 
-        function sendCommandToTerminal(command) {
-            self.terminalViewModel.command(command);
-            self.terminalViewModel.sendCommand();
-        }
-
         function addButtonsToTermTab() {
             $(".termctrl").remove();
             $("div.terminal").after("\
@@ -91,11 +86,17 @@ $(function() {
 
             // copy and reverse array so buttons appear in the order they're added (!)
             self.terminalCommands().slice(0).reverse().forEach(function(data) {
-                var name;
-                if(typeof data.name === 'function')
+                var name, commands;
+                
+                if(typeof data.name === 'function') {
                     name = data.name();
-                else
+                    commands = data.commands();
+                }
+                else {
                     name = data.name;
+                    commands = data.commands;
+                }
+                console.log("Adding button: [" + name + "]  " + commands);
                 $("div.termctrl").after("\
                     <button type=\"button\" class=\"btn termctrl\">" + name + "</button>\
                 ");
@@ -104,21 +105,22 @@ $(function() {
             $("button.termctrl").click(function() {
                 var button = $(this);
                 var command = getCmdFromName(button.text());
-                console.log("Adding: [" + button.text() + "]  " + command);
+                console.log("Click: [" + button.text() + "]  " + command);
 
-                if(command.split("|").length > 1) {
-                    cmdList = command.split("|");
-                    command = "";
+                if(command.split(";").length > 1) {
+                    cmdList = command.split(";");
+
                     for(var i = 0; i < cmdList.length; i++) {
-                        self.sendCommand(cmdList[i]);
+                        self.sendCommand(cmdList[i].trim());
                     }
+
                 } else {
                     self.sendCommand(command);
                 }
             });
         }
 
-        function debugArray() {
+        function printCommandArray() {
             self.terminalCommands().forEach(function(data, i) {
                 var name, command;
                 if(typeof data.name === 'function') {
@@ -129,19 +131,20 @@ $(function() {
                     name = data.name;
                     commands = data.commands;
                 }
+                console.log("printCommandArray:");
                 console.log("[" + name + "]  " + commands);
             })
         }
 
         self.onBeforeBinding = function () {
             self.terminalCommands(self.settingsViewModel.settings.plugins.TerminalCommands.controls.slice(0));
-            debugArray();
+            printCommandArray();
             addButtonsToTermTab();
         };
 
         self.onSettingsBeforeSave = function () {
             self.settingsViewModel.settings.plugins.TerminalCommands.controls(self.terminalCommands.slice(0));
-            debugArray();
+            printCommandArray();
             addButtonsToTermTab();
         }
     }

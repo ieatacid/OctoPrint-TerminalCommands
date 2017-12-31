@@ -11,10 +11,10 @@ or manually using this URL:
 
 
 ## Screenshots
-**Custom command buttons in the terminal tab**
+Custom command buttons in the terminal tab
 
-![Edit button](extras/assets/img/terminal_tab.png?raw=true)
+![Command buttons](extras/assets/img/terminal_tab.png?raw=true)
 
-**Plugin settings**
+Plugin settings
 
 ![Settings](extras/assets/img/terminal_commands_settings.png?raw=true)

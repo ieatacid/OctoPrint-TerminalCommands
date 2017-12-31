@@ -8,7 +8,7 @@ author: ieatacid
 license: AGPLv3
 
 # TODO
-date: today's date in format YYYY-MM-DD, e.g. 2015-04-21
+date: 2018-01-02
 
 homepage: https://github.com/ieatacid/OctoPrint-TerminalCommands
 source: https://github.com/ieatacid/OctoPrint-TerminalCommands
@@ -29,16 +29,16 @@ tags:
 
 # TODO
 screenshots:
-- url: url of a screenshot, /assets/img/...
-  alt: alt-text of a screenshot
-  caption: caption of a screenshot
-- url: url of another screenshot, /assets/img/...
-  alt: alt-text of another screenshot
-  caption: caption of another screenshot
+- url: /assets/img/terminal_tab.png
+  alt: Terminal tab with command buttons
+  caption: Terminal tab with command buttons
+- url: /assets/img/terminal_commands_settings.png
+  alt: Terminal Commands settings
+  caption: Terminal Commands settings
 - ...
 
 # TODO
-featuredimage: url of a featured image for your plugin, /assets/img/...
+featuredimage: /assets/img/terminal_tab.png
 
 # TODO
 # You only need the following if your plugin requires specific OctoPrint versions or

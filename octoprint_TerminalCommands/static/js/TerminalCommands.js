@@ -81,7 +81,7 @@ $(function() {
         function addButtonsToTermTab() {
             $(".termctrl").remove();
             $("div.terminal").after("\
-                <hr class=\"termctrl\" style=\"margin-top: 35px\">\
+                <hr class=\"termctrl\">\
                 <form class=\"form-horizontal termctrl\">\
                     <div class=\"termctrl\">\
                     </div>\

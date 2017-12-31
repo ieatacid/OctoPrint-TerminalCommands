@@ -1,3 +1,8 @@
 button.termctrl {
     margin-bottom: 5px;
 }
+
+hr.termctrl {
+    margin-top: 35px;
+    opacity: 0.8;
+}

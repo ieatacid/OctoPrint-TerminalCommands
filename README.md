@@ -1,6 +1,6 @@
 # OctoPrint-TerminalCommands
 
-Lets you add custom command buttons to the terminal tab
+Lets you add custom command buttons to the terminal tab (currenty only supports G Code)
 
 ## Setup
 
@@ -10,6 +10,11 @@ or manually using this URL:
     https://github.com/ieatacid/OctoPrint-TerminalCommands/archive/master.zip
 
 
-## Configuration
+## Screenshots
+Adds custom command buttons to terminal tab
 
-**TODO:** Describe your plugin's configuration options (if any).
+![Edit button](extras/assets/img/terminal_tab.png?raw=true)
+
+Plugin settings
+
+![Settings](extras/assets/img/terminal_commands_settings.png?raw=true)

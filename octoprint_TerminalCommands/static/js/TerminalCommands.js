@@ -74,14 +74,15 @@ $(function() {
         };
 
         function addButtonsToTermTab() {
+            console.log("addButtonsToTermTab");
             $(".termctrl").remove();
             $("div.terminal").after("\
-                <hr class=\"termctrl\">\
+                <hr class=\"termctrl top-hr\">\
                 <form class=\"form-horizontal termctrl\">\
                     <div class=\"termctrl\">\
                     </div>\
                 </form>\
-                <hr class=\"termctrl\">\
+                <hr class=\"termctrl bottom-hr\">\
             ");
 
             // copy and reverse array so buttons appear in the order they're added (!)

@@ -21,12 +21,12 @@ tags:
 - ui
 
 screenshots:
-- url: /assets/img/terminal_tab.png
+- url: /assets/img/plugins/TerminalCommands/terminal_tab.png
   alt: Terminal tab with command buttons
-- url: /assets/img/terminal_commands_settings.png
+- url: /assets/img/plugins/TerminalCommands/terminal_commands_settings.png
   alt: Terminal Commands settings
 
-featuredimage: /assets/img/terminal_tab.png
+featuredimage: /assets/img/plugins/TerminalCommands/terminal_tab.png
 
 compatibility:
 

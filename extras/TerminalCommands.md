@@ -7,7 +7,7 @@ description: Lets you add custom G-code command buttons to OctoPrint's Terminal 
 author: ieatacid
 license: AGPLv3
 
-date: 2018-01-02
+date: 2017-12-31
 
 homepage: https://github.com/ieatacid/OctoPrint-TerminalCommands
 source: https://github.com/ieatacid/OctoPrint-TerminalCommands

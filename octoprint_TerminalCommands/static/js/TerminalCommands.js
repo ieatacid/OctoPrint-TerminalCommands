@@ -16,7 +16,7 @@ $(function() {
         self.addTerminalCommand = function(data) {
             console.log("addTerminalCommand: ")
             console.log(data);
-            self.terminalCommands.push({name: "Name", commands: "Commands"})
+            self.terminalCommands.push({name: "", commands: ""})
         };
 
         self.removeTerminalCommand = function(filter) {
@@ -83,7 +83,7 @@ $(function() {
             // copy and reverse array so buttons appear in the order they're added (!)
             self.terminalCommands().slice(0).reverse().forEach(function(data) {
                 var name, commands;
-                
+
                 if(typeof data.name === 'function') {
                     name = data.name();
                     commands = data.commands();
@@ -97,7 +97,7 @@ $(function() {
                     <button type=\"button\" class=\"btn termctrl\">" + name + "</button>\
                 ");
             });
-                            
+
             $("button.termctrl").click(function() {
                 var button = $(this);
                 var command = getCmdFromName(button.text());

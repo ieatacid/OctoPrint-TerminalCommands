@@ -25,9 +25,10 @@ $(function() {
 
         function getCmdFromName(name) {
             console.log("getCmdFromName: " + name);
-            for(var i = 0; i < self.terminalCommands().length; i++) {
-                if(name == self.terminalCommands()[i].name()) {
-                    return self.terminalCommands()[i].commands();
+            var data = self.terminalCommands();
+            for(var i = 0; i < data.length; i++) {
+                if(name == (typeof data[i].name === 'function' ? data[i].name() : data[i].name)) {
+                    return (typeof data[i].commands === 'function' ? data[i].commands() : data[i].commands);
                 }
             }
         }
@@ -70,15 +71,18 @@ $(function() {
 
         function addButtonsToTermTab() {
             console.log("addButtonsToTermTab");
+            console.log("len: %i", self.terminalCommands().length);
             $(".termctrl").remove();
-            $("div.terminal").after("\
-                <hr class=\"termctrl top-hr\">\
-                <form class=\"form-horizontal termctrl\">\
-                    <div class=\"termctrl\">\
-                    </div>\
-                </form>\
-                <hr class=\"termctrl bottom-hr\">\
-            ");
+            if(self.terminalCommands().length > 0) {
+                $("div.terminal").after("\
+                    <hr class=\"termctrl top-hr\">\
+                    <form class=\"form-horizontal termctrl\">\
+                        <div class=\"termctrl\">\
+                        </div>\
+                    </form>\
+                    <hr class=\"termctrl bottom-hr\">\
+                ");
+            }
 
             // copy and reverse array so buttons appear in the order they're added (!)
             self.terminalCommands().slice(0).reverse().forEach(function(data) {

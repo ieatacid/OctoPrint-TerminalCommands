@@ -24,17 +24,12 @@ $(function() {
         };
 
         function getCmdFromName(name) {
-            var returnCmd = ko.utils.arrayFirst(self.terminalCommands(), function(cmd) {
-                if(typeof cmd.name === 'function') {
-                    return cmd.name() === name;
+            console.log("getCmdFromName: " + name);
+            for(var i = 0; i < self.terminalCommands().length; i++) {
+                if(name == self.terminalCommands()[i].name()) {
+                    return self.terminalCommands()[i].commands();
                 }
-                return cmd.name;
-            });
-
-            if(typeof returnCmd.commands === 'function') {
-                return returnCmd.commands();
             }
-            return returnCmd.commands;
         }
 
         // From: https://github.com/foosel/OctoPrint/blob/master/src/octoprint/static/js/app/viewmodels/terminal.js#L320

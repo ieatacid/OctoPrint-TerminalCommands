@@ -7,10 +7,10 @@
     <div data-bind="foreach: terminalCommands">
         <div class="row-fluid" style="margin-bottom: 5px">
             <div class="span4">
-                <input type="text" class="span12" data-bind="value: name">
+                <input type="text" class="span12" data-bind="value: name" placeholder="Name">
             </div>
             <div class="span6">
-                <input type="text" class="span12" data-bind="value: commands">
+                <input type="text" class="span12" data-bind="value: commands" placeholder="Commands">
             </div>
             <div class="span2">
                 <a title="Remove Command" class="btn btn-danger" data-bind="click: $root.removeTerminalCommand"><i class="fa fa-trash-o"></i></a>

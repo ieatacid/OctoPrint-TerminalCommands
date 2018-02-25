@@ -111,7 +111,9 @@ $(function() {
                     cmdList = command.split(";");
 
                     for(var i = 0; i < cmdList.length; i++) {
-                        self.sendCommand(cmdList[i].trim());
+                        if(cmdList[i][0] !== undefined) {
+                            self.sendCommand(cmdList[i].trim());
+                        }
                     }
 
                 } else {

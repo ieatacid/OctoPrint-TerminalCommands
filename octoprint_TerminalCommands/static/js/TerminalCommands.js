@@ -104,20 +104,15 @@ $(function() {
 
             $("button.termctrl").click(function() {
                 var button = $(this);
-                var command = getCmdFromName(button.text());
-                console.log("Click: [" + button.text() + "]  " + command);
+                var commandStr = getCmdFromName(button.text());
+                console.log("Click: [" + button.text() + "]  " + commandStr);
 
-                if(command.split(";").length > 1) {
-                    cmdList = command.split(";");
-
-                    for(var i = 0; i < cmdList.length; i++) {
-                        if(cmdList[i][0] !== undefined) {
-                            self.sendCommand(cmdList[i].trim());
-                        }
-                    }
+                if(commandStr.split(";").length > 1) {
+                    console.log("send( " + commandStr.replace(/;/g, "\n") + " )");
+                    self.sendCommand(commandStr.replace(/;/g, "\n"));
 
                 } else {
-                    self.sendCommand(command);
+                    self.sendCommand(commandStr);
                 }
             });
         }

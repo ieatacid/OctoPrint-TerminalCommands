@@ -10,6 +10,7 @@ $(function() {
 
         self.terminalViewModel = parameters[0];
         self.settingsViewModel = parameters[1];
+        self.loginState = parameters[2];
 
         self.terminalCommands = ko.observableArray([]);
 
@@ -69,10 +70,19 @@ $(function() {
             }
         };
 
+        function removeButtonsFromTermTab() {
+            $(".termctrl").remove();
+        }
+
         function addButtonsToTermTab() {
             console.log("addButtonsToTermTab");
             console.log("len: %i", self.terminalCommands().length);
             $(".termctrl").remove();
+
+            if(!self.loginState.loggedIn()) {
+                return;
+            }
+
             if(self.terminalCommands().length > 0) {
                 $("div.terminal").after("\
                     <hr class=\"termctrl top-hr\">\
@@ -133,6 +143,15 @@ $(function() {
             })
         }
 
+        self.onUserLoggedIn = function() {
+            addButtonsToTermTab();
+
+        }
+
+        self.onUserLoggedOut = function() {
+            removeButtonsFromTermTab();
+        }
+
         self.onBeforeBinding = function () {
             self.terminalCommands(self.settingsViewModel.settings.plugins.TerminalCommands.controls.slice(0));
             // printCommandArray();
@@ -148,7 +167,7 @@ $(function() {
 
     OCTOPRINT_VIEWMODELS.push([
         TerminalCommandsViewModel,
-        [ "terminalViewModel", "settingsViewModel"],
+        [ "terminalViewModel", "settingsViewModel", "loginStateViewModel"],
         [ "#settings_plugin_TerminalCommands" ]
     ]);
 });

@@ -44,6 +44,7 @@ $(function() {
 
             var commandToSend = command;
             var commandMatch = commandToSend.match(commandRe);
+
             if(commandMatch !== null) {
                 var fullCode = commandMatch[1].toUpperCase(); // full code incl. sub code
                 var mainCode = commandMatch[2].toUpperCase(); // main code only without sub code
@@ -115,13 +116,21 @@ $(function() {
             $("button.termctrl").click(function() {
                 var button = $(this);
                 var commandStr = getCmdFromName(button.text());
+                var cmds = commandStr.split(";");
+                var nCmds = cmds.length;
                 console.log("Click: [" + button.text() + "]  " + commandStr);
 
-                if(commandStr.split(";").length > 1) {
-                    console.log("send( " + commandStr.replace(/;/g, "\n") + " )");
-                    self.sendCommand(commandStr.replace(/;/g, "\n"));
-
+                if(nCmds > 1) {
+                    console.log("Multiple commands...");
+                    var i = 0;
+                    do {
+                        console.log("send( " + cmds[i] + " )");
+                        self.sendCommand(cmds[i]);
+                        i++;
+                        nCmds--;
+                    } while(nCmds > 0);
                 } else {
+                    console.log("send( " + cmds[i] + " )");
                     self.sendCommand(commandStr);
                 }
             });
